@@ -1,0 +1,56 @@
+class Solution {
+    class Pair {
+        int v, cost;
+        Pair(int v, int cost){
+            this.v=v;
+            this.cost=cost;
+        }
+    }
+    LinkedList<Pair> []adj;
+    int ans=Integer.MAX_VALUE;
+    public void price(int src, int dst, int k, int cos)
+    {
+        if(cos > ans) return;
+        if(src==dst){
+            ans = Math.min(ans, cos);
+            return;
+        }
+        if(k<0)  return;
+        
+        for(Pair p:adj[src])
+        {           
+            price(p.v, dst, k-1, cos+p.cost);
+        }
+    }
+    public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
+        adj = new LinkedList[n];
+        for(int i=0;i<n;i++)
+            adj[i] = new LinkedList();
+        for(int []temp:flights)
+            adj[temp[0]].add(new Pair(temp[1], temp[2]));
+        price(src, dst, K, 0);
+         
+        if(ans >= Integer.MAX_VALUE-100)
+            return -1;
+        else
+            return ans;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
