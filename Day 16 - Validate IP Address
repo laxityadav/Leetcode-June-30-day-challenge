@@ -1,0 +1,54 @@
+class Solution {
+    public boolean ipv4(String ip)
+    {
+        if(ip.charAt(0)=='.' || ip.charAt(ip.length()-1)=='.') return false;
+        String []str = ip.split("[.]");
+        //System.out.println(str.length+" "+ip); 
+        if(str.length != 4) return false;
+        for(int i=0;i<str.length;i++)
+        {
+            int val=0;
+            try{
+                val = Integer.parseInt(str[i]);
+                if(val != 0 && str[i].charAt(0) == '0')
+                    return false;
+                if(val==0 && str[i].length()!=1) return false;
+                if(val<0 || val>255) return false;
+            }catch(Exception e){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean ipv6(String ip)
+    {
+        if(ip.charAt(0)==':' || ip.charAt(ip.length()-1)==':') return false;
+        String []str = ip.split(":");
+        if(str.length != 8) return false;
+        for(int i=0;i<str.length;i++)
+        {
+            if(str[i].length() > 4) return false; 
+            boolean isHex = str[i].matches("^[0-9a-fA-F]+$");
+            if(!isHex) return false;
+            for(int j=0;j<str[i].length();j++){
+                char c = str[i].charAt(j);
+                if(!((c>='a' && c<='z') || (c>='A' && c<='Z') || (c>='0' && c<='9')))
+                    return false;
+            }
+        }
+        return true;
+    }
+    public String validIPAddress(String ip) {
+        char ch='s';
+        for(int i=0;i<ip.length();i++){
+            ch = ip.charAt(i);
+            if(ch==':' || ch=='.') break;
+        }
+        
+        if(ch==':' && ipv6(ip))
+            return "IPv6";
+        else if(ch=='.' && ipv4(ip))
+            return "IPv4";
+        return "Neither";
+    }
+}
