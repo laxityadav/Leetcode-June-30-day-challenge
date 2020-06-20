@@ -1,0 +1,21 @@
+class Solution {
+    public int hIndex(int[] citations) {
+        int n = citations.length-1;
+        if(n==-1 || citations[n]==0) return 0;
+        int st=0, end=n, mid=0, diff=0, tem=0;
+        while(st <= end){
+            mid=(st+end)/2;
+            diff = 1 + n-mid;
+            if(citations[mid] == diff)
+                return diff;
+            else if(citations[mid] > diff)
+                end=mid-1;
+            else
+                st=mid+1;
+        }
+        if(citations[1+n-diff] >= diff)
+           return diff;
+        else
+            return diff-1;
+    }
+}
