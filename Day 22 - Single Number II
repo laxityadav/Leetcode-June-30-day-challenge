@@ -1,0 +1,29 @@
+class Solution {
+    public int singleNumber(int[] nums) {
+        int []ans = new int[32];
+        int neg=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            long val = nums[i];
+            int count=0;
+            if(val<0){
+               val=-val;
+                neg++;
+            } 
+            while(val>0){
+                ans[count++] += val%2;
+                val/=2;
+            }
+        }
+        long res=0;
+        for(int i=0;i<32;i++)
+        {
+            ans[i]=ans[i] % 3;
+            res += ans[i]*Math.pow(2, i);
+        }
+        //System.out.println(res);
+        if(neg%3 != 0)
+            res=-res;
+        return (int)res;
+    }
+}
