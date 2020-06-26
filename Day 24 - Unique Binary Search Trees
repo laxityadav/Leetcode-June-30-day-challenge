@@ -1,0 +1,21 @@
+import java.math.BigInteger;
+class Solution {
+    public int solve(int n, int []dp) 
+    { 
+        if(dp[n]!=0)
+            return dp[n];
+        int ans=0;
+        for(int i=1;i<=n;i++)
+        {
+            ans += solve(i-1, dp) * solve(n-i, dp);
+        }
+        return dp[n]=ans;
+    } 
+    public int numTrees(int n) {
+        
+        int []dp = new int[101];
+        dp[0]=1;
+        dp[1]=1;
+        return solve(n, dp);
+    }
+}
