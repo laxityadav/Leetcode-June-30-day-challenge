@@ -1,0 +1,32 @@
+class Solution {
+    public int numSquares(int n) {
+        // int row = (int)Math.sqrt(n);
+        // int [][]dp = new int[row+1][n+1];
+        // for(int i=0;i<=n;i++)
+        //     dp[0][i] = i;
+        // for(int i=1;i<=row;i++)
+        // {
+        //     for(int j=1;j<=n;j++)
+        //     {
+        //         if((j-i*i) >=0){
+        //             dp[i][j] = Math.min(1 + dp[i][j-i*i], dp[i-1][j]);
+        //         }
+        //         else
+        //             dp[i][j] = dp[i-1][j];
+        //     }
+        // }
+        // return dp[row][n];
+        int[] dp = new int[n+1];
+        for(int x = 1; x <= n; ++x){
+            int min_val = x;
+            int y = 1, sq = 1;
+            while(sq <= x){
+                min_val = Math.min(min_val, 1 + dp[x-sq]);
+                y++;
+                sq = y*y;
+            }
+            dp[x] = min_val;
+        }
+        return dp[n];
+    }
+}
